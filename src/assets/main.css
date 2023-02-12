@@ -1,4 +1,5 @@
 @import './base.css';
+/* @import url('@style/test.less'); */
 
 #app {
   max-width: 1280px;
