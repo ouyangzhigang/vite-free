@@ -12,6 +12,9 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
   },
+  globals: {
+    postMessage: true,
+  },
   rules: {
     'space-before-function-paren': 'off',
   },
