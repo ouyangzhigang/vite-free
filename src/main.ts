@@ -1,34 +1,23 @@
 import "./style.css";
-import typescriptLogo from "./typescript.svg";
+// import typescriptLogo from "./typescript.svg";
 import { setupCounter } from "./counter";
+
+const globalModules = import.meta.glob("./components/*"); // map
+Object.entries(globalModules).forEach(([k, v]) => {
+  console.log(k, v);
+  v().then((m: any) => console.log(m.default));
+});
 
 export const render = () => {
   document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
     <div>
-      <a href="https://vitejs.dev" target="_blank">
-        <img src="/vite.svg" class="logo" alt="Vite logo" />
-      </a>
-      <a href="https://www.typescriptlang.org/" target="_blank">
-        <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-      </a>
-      <h1>Vite + TypeScript</h1>
-      <div class="card">
-        <button id="counter" type="button"></button>
-      </div>
-      <p class="read-the-docs">
-        Click on the Vite and TypeScript logos to learn more
-      </p>
-      hello world!
+      hello world! <br />
+      <button id="counter"></button>
+      <p>${JSON.stringify(globalModules)}</p>
     </div>
   `;
 };
 
 render();
-if (import.meta.hot) {
-  import.meta.hot.accept((newModule) => {
-    debugger;
-    newModule.render();
-  });
-}
 
 setupCounter(document.querySelector<HTMLButtonElement>("#counter")!);
