@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>form 表单校验</title>
+  <style>
+    input:invalid {
+      box-shadow: 0 0 3px 0px red;
+      border: 1px solid red;
+    }
+    input:focus:invalid {
+      outline: none;
+    }
+    #hidden {
+      /* visibility: hidden; */
+      height: 0; width: 0;
+      border: none;
+      box-shadow: none;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="https://blog.csdn.net/qq_51336762/article/details/126577159">example demo</a>
+  <a href="https://geek-docs.com/html/html-ask-answer/94_html_form_validation_get_all_input_typetext_and_validate.html">example
+    api</a>
+
+  <form>
+    <input id="email" type="email" required />
+    <input id="text" type="text" value="" pattern="[0-9]{11}" required />
+    <input id="hidden" name="hidden" type="text" value="" required />
+    <input type="submit" value="提交">
+  </form>
+</body>
+<script>
+  const email = document.getElementById('email')
+  console.log(email)
+  email.addEventListener('input', (e) => {
+    console.log(email.validity)
+    if (email.validity.typeMismatch) {
+      email.setCustomValidity('请输入正确邮箱')
+    } else {
+      email.setCustomValidity('')
+    }
+  })
+
+  const text = document.getElementById('text')
+  console.log(text)
+  text.addEventListener('input', (e) => {
+    console.log(text.validity)
+    if (text.validity.patternMismatch) {
+      text.setCustomValidity('请输入正确号码')
+    } else {
+      text.setCustomValidity('')
+    }
+  })
+</script>
+</html>

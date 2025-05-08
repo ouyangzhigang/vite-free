@@ -9,6 +9,7 @@ export default defineConfig({
       input: {
         index: "index.html",
         advance: "advance.html",
+        form: "form.html"
       },
     },
   },
