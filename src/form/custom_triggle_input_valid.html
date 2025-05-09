@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>动态表单校验</title>
+    <style>
+        input:invalid { outline: none; border-color: transparent; } /* 隐藏默认样式 */
+        .invalid-input { border-color: red; background-color: #fff0f0; }
+        .valid-input { border-color: green; background-color: #f0fff5; }
+    </style>
+</head>
+<body>
+    <form>
+        <label for="username">用户名：</label>
+        <input type="text" id="username" name="username" required pattern="^[a-zA-Z]{5,}$" />
+        <span id="feedback"></span>
+    </form>
+
+    <script>
+        const input = document.getElementById('username');
+        const feedback = document.getElementById('feedback');
+
+        input.addEventListener('input', function() {
+            const value = this.value;
+            const pattern = new RegExp(this.getAttribute('pattern'));
+            const isValid = pattern.test(value);
+
+            // 动态调整样式
+            if (isValid && value !== '') {
+                this.classList.add('valid-input');
+                this.classList.remove('invalid-input');
+                feedback.textContent = '格式正确';
+                feedback.style.color = 'green';
+            } else if (value !== '') {
+                this.classList.add('invalid-input');
+                this.classList.remove('valid-input');
+                feedback.textContent = '请输入至少5个字母';
+                feedback.style.color = 'red';
+            } else {
+                this.classList.remove('invalid-input', 'valid-input');
+                feedback.textContent = '';
+            }
+        });
+
+        // 初始化时清除校验状态
+        input.classList.remove('invalid-input', 'valid-input');
+        feedback.textContent = '';
+    </script>
+</body>
+</html>

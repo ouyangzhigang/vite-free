@@ -10,12 +10,17 @@
       box-shadow: 0 0 3px 0px red;
       border: 1px solid red;
     }
+
     input:focus:invalid {
-      outline: none;
+      /* outline: none; */
+      box-shadow: none;
+      /* border: none; */
     }
+
     #hidden {
       /* visibility: hidden; */
-      height: 0; width: 0;
+      height: 0;
+      width: 0;
       border: none;
       box-shadow: none;
     }
@@ -23,19 +28,43 @@
 </head>
 
 <body>
-  <a href="https://blog.csdn.net/qq_51336762/article/details/126577159">example demo</a>
-  <a href="https://geek-docs.com/html/html-ask-answer/94_html_form_validation_get_all_input_typetext_and_validate.html">example
-    api</a>
-  <a href="https://developer.mozilla.org/zh-CN/docs/Learn_web_development/Extensions/Forms/Form_validation">MDN NICE!!!</a>
+  <ul>
+    <li>
+      <a href="https://blog.csdn.net/qq_51336762/article/details/126577159">example demo</a>
+    </li>
+    <li>
+      <a
+        href="https://geek-docs.com/html/html-ask-answer/94_html_form_validation_get_all_input_typetext_and_validate.html">example
+        api</a>
+    </li>
+    <li>
+      <a href="https://developer.mozilla.org/zh-CN/docs/Learn_web_development/Extensions/Forms/Form_validation">MDN
+        NICE!!!</a>
+    </li>
+  </ul>
 
-  <form>
+
+  default: 
+  <form action="">
     <input id="email" type="email" required />
     <input id="text" type="text" value="" pattern="[0-9]{11}" required />
-    <input id="hidden" name="hidden" type="text" value="" required />
+    <input id="number" type="tel" required />
     <input type="submit" value="提交">
   </form>
+
+  <hr>
+
+  vue:
+  <div id="app">
+    <form>
+      <input id="visible" ref="visible" name="visible" type="text" pattern="\w+" v-model="value" @input="change" required />
+      <input id="hidden" name="hidden" type="text" required />
+      <input type="submit" value="提交">
+    </form>
+  </div>
 </body>
-<script>
+<script type="module">
+  import { createApp, ref, onMounted } from 'vue'
   const email = document.getElementById('email')
   console.log(email)
   email.addEventListener('input', (e) => {
@@ -57,5 +86,30 @@
       text.setCustomValidity('')
     }
   })
+
+  createApp({
+    setup(props, {  }) {
+      const value = ref('')
+      const change = (e) => {
+        console.log(e.target.validity)
+        if (e.target.validity.patternMismatch) {
+          e.target.setCustomValidity('nonono')
+        } else {
+          e.target.setCustomValidity('')
+        }
+      }
+
+      // onMounted(() => {
+      //   const visible = document.getElementById('visible')
+      //   console.log(visible.target)
+      // })
+
+      return {
+        change,
+        value
+      }
+    }
+  }).mount('#app')
+
 </script>
 </html>
